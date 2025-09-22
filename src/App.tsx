@@ -45,11 +45,17 @@ function App() {
         difficulty={difficulty}
       />
 
-      <Board cards={cards} onCardClick={handleCardClick} difficulty={difficulty} />
+      <Board
+        cards={cards}
+        onCardClick={handleCardClick}
+        difficulty={difficulty}
+      />
 
       <KeyboardHelp />
 
+
     </div>
+    
   );
 }
 

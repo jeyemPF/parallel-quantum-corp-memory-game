@@ -1,0 +1,25 @@
+.footer {
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem; // base font size
+  color: hsl(210 20% 30%);
+  background: hsl(210 50% 96%);
+  border-top: 1px solid hsl(210 20% 85%);
+
+  @media (max-width: 480px) {
+    font-size: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  @media (min-width: 481px) and (max-width: 1024px) {
+    font-size: 0.85rem;
+    padding: 1rem;
+  }
+
+  @media (min-width: 1025px) {
+    font-size: 0.9rem;
+    padding: 1.25rem;
+  }
+}

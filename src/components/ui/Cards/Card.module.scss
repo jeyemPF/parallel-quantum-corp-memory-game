@@ -60,7 +60,6 @@
   color: hsl(0 0% 100%);
 }
 
-/* Extra fine-tuning for devices */
 @media (max-width: 1024px) {
   .card {
     width: clamp(3rem, 6vw, 4.5rem);
@@ -86,6 +85,6 @@
   }
   .cardFront,
   .cardBack {
-    font-size: clamp(0.75rem, 4vw, 1rem);
+    font-size: clamp(1rem, 4vw, 1rem);
   }
 }

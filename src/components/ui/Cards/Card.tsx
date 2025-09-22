@@ -1,5 +1,5 @@
-import styles from './Card.module.scss';
-import { getCandidateIndex, type ArrowKey } from './utils/navigation';
+import styles from "./Card.module.scss";
+import { getCandidateIndex, type ArrowKey } from "./utils/navigation";
 
 type CardType = {
   isFlipped: boolean;
@@ -14,19 +14,24 @@ interface CardProps {
   totalCards: number;
 }
 
-const CardComponent: React.FC<CardProps> = ({ card, onClick, index, totalCards }) => {
+const CardComponent: React.FC<CardProps> = ({
+  card,
+  onClick,
+  index,
+  totalCards,
+}) => {
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       onClick();
       return;
     }
 
-    if (event.key.startsWith('Arrow')) {
+    if (event.key.startsWith("Arrow")) {
       event.preventDefault();
 
       const rows = Math.sqrt(totalCards);
-      const cols = rows; 
+      const cols = rows;
 
       const key = event.key as ArrowKey;
       const nextIndex = getCandidateIndex(key, index, rows, cols);
@@ -38,7 +43,9 @@ const CardComponent: React.FC<CardProps> = ({ card, onClick, index, totalCards }
   return (
     <button
       id={`card-${index}`}
-      className={`${styles.card} ${card.isFlipped ? styles.flipped : ''} ${card.isMatched ? styles.matched : ''}`}
+      className={`${styles.card} ${card.isFlipped ? styles.flipped : ""} ${
+        card.isMatched ? styles.matched : ""
+      }`}
       onClick={onClick}
       onKeyDown={handleKeyDown}
       disabled={card.isMatched}

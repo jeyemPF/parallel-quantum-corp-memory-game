@@ -1,24 +1,30 @@
-import type { BestScores, Difficulty } from "../types/game";
+// src/utils/storage.ts
+import type { BestScores, Difficulty, BestScore } from "../types/game";
 
 const STORAGE_KEY = "memory-game-best-scores";
 
+// Default structure for best scores
+const DEFAULT_SCORES: BestScores = {
+  easy: null,
+  medium: null,
+  hard: null,
+};
+
+// Get all best scores
 export const getBestScores = (): BestScores => {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
-      return JSON.parse(stored);
+      const parsed = JSON.parse(stored) as Partial<BestScores>;
+      return { ...DEFAULT_SCORES, ...parsed };
     }
   } catch (error) {
     console.error("Error reading best scores from localStorage:", error);
   }
-
-  return {
-    easy: null,
-    medium: null,
-    hard: null,
-  };
+  return DEFAULT_SCORES;
 };
 
+// Save a best score for a specific difficulty
 export const saveBestScore = (
   difficulty: Difficulty,
   moves: number,
@@ -28,22 +34,22 @@ export const saveBestScore = (
     const currentScores = getBestScores();
     const currentBest = currentScores[difficulty];
 
-    const isNewBest =
-      !currentBest ||
-      moves < currentBest.moves ||
-      (moves === currentBest.moves && time < currentBest.time);
+    const isNewBest: boolean =
+      !currentBest || moves < currentBest.moves || (moves === currentBest.moves && time < currentBest.time);
 
     if (isNewBest) {
-      const newScores = {
-        ...currentScores,
-        [difficulty]: {
-          moves,
-          time,
-          date: new Date().toISOString(),
-        },
+      const newScore: BestScore = {
+        moves,
+        time,
+        date: new Date().toISOString(),
       };
 
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newScores));
+      const updatedScores: BestScores = {
+        ...currentScores,
+        [difficulty]: newScore,
+      };
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedScores));
       return true;
     }
 
@@ -54,6 +60,7 @@ export const saveBestScore = (
   }
 };
 
+// Clear all best scores
 export const clearBestScores = (): void => {
   try {
     localStorage.removeItem(STORAGE_KEY);

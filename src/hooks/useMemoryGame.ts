@@ -2,18 +2,9 @@ import { useState, useEffect } from "react";
 import { generateCards, shuffleCards } from "../utils/gameLogic";
 import { saveBestScore } from "../utils/storage";
 import type { Card, Difficulty } from "../types/game";
-
-const difficulties = {
-  easy: { rows: 2, cols: 2 },
-  medium: { rows: 4, cols: 4 },
-  hard: { rows: 6, cols: 6 },
-} as const;
-
-const formatTime = (seconds: number): string => {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, "0")}`;
-};
+import { difficulties } from "../constants/difficulties";
+import { formatTime } from "../utils/timeHelpers";
+import { MESSAGES } from "../constants/messages";
 
 export function useMemoryGame(difficulty: Difficulty) {
   const [cards, setCards] = useState<Card[]>([]);
@@ -34,9 +25,7 @@ export function useMemoryGame(difficulty: Difficulty) {
     setTime(0);
     setIsGameStarted(false);
     setIsGameCompleted(false);
-    setAnnouncement(
-      "New game started. Use Tab to navigate cards, Enter or Space to flip."
-    );
+    setAnnouncement(MESSAGES.GAME_START);
   };
 
   // Init or reset when difficulty changes
@@ -46,14 +35,9 @@ export function useMemoryGame(difficulty: Difficulty) {
 
   // Timer effect
   useEffect(() => {
-    let interval: ReturnType<typeof setInterval> | undefined;
+    if (!isGameStarted || isGameCompleted) return;
 
-    if (isGameStarted && !isGameCompleted) {
-      interval = setInterval(() => {
-        setTime((prev) => prev + 1);
-      }, 1000);
-    }
-
+    const interval = setInterval(() => setTime((prev) => prev + 1), 1000);
     return () => clearInterval(interval);
   }, [isGameStarted, isGameCompleted]);
 
@@ -64,13 +48,11 @@ export function useMemoryGame(difficulty: Difficulty) {
       setIsGameCompleted(true);
       setIsGameStarted(false);
 
-      if (isNewBest) {
-        setAnnouncement(
-          `🎉 New best score: ${moves} moves in ${formatTime(time)}!`
-        );
-      } else {
-        setAnnouncement(`✅ Completed in ${moves} moves (${formatTime(time)}).`);
-      }
+      setAnnouncement(
+        isNewBest
+          ? MESSAGES.BEST_SCORE(moves, formatTime(time))
+          : MESSAGES.GAME_COMPLETED(moves, formatTime(time))
+      );
     }
   }, [cards, difficulty, moves, time]);
 
@@ -78,15 +60,15 @@ export function useMemoryGame(difficulty: Difficulty) {
   const handleCardClick = (clickedCard: Card) => {
     if (
       clickedCard.isFlipped ||
-      flippedCards.length === 2 ||
-      clickedCard.isMatched
+      clickedCard.isMatched ||
+      flippedCards.length === 2
     ) {
       return;
     }
 
     if (!isGameStarted) {
       setIsGameStarted(true);
-      setAnnouncement("Game started! Timer is running.");
+      setAnnouncement(MESSAGES.GAME_RUNNING);
     }
 
     const updatedCards = cards.map((card) =>
@@ -94,19 +76,19 @@ export function useMemoryGame(difficulty: Difficulty) {
     );
     setCards(updatedCards);
 
-    const newFlippedCards = [...flippedCards, clickedCard];
-    setFlippedCards(newFlippedCards);
+    const newFlipped = [...flippedCards, clickedCard];
+    setFlippedCards(newFlipped);
 
-    if (newFlippedCards.length === 2) {
+    if (newFlipped.length === 2) {
       setMoves((prev) => prev + 1);
-      const [firstCard, secondCard] = newFlippedCards;
+      const [first, second] = newFlipped;
 
-      if (firstCard.value === secondCard.value) {
-        setAnnouncement(`Match found! ${firstCard.value}`);
+      if (first.value === second.value) {
+        setAnnouncement(MESSAGES.MATCH_FOUND(first.value));
         setTimeout(() => {
-          setCards((prevCards) =>
-            prevCards.map((card) =>
-              card.id === firstCard.id || card.id === secondCard.id
+          setCards((prev) =>
+            prev.map((card) =>
+              card.id === first.id || card.id === second.id
                 ? { ...card, isMatched: true }
                 : card
             )
@@ -114,11 +96,11 @@ export function useMemoryGame(difficulty: Difficulty) {
           setFlippedCards([]);
         }, 500);
       } else {
-        setAnnouncement("No match. Cards will flip back.");
+        setAnnouncement(MESSAGES.NO_MATCH);
         setTimeout(() => {
-          setCards((prevCards) =>
-            prevCards.map((card) =>
-              card.id === firstCard.id || card.id === secondCard.id
+          setCards((prev) =>
+            prev.map((card) =>
+              card.id === first.id || card.id === second.id
                 ? { ...card, isFlipped: false }
                 : card
             )
@@ -127,7 +109,7 @@ export function useMemoryGame(difficulty: Difficulty) {
         }, 1000);
       }
     } else {
-      setAnnouncement(`Flipped card: ${clickedCard.value}`);
+      setAnnouncement(MESSAGES.CARD_FLIPPED(clickedCard.value));
     }
   };
 
