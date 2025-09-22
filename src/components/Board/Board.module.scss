@@ -1,53 +1,26 @@
 .board {
   display: grid;
   gap: 0.5rem;
-  margin: 1rem auto;
-  max-width: 100%;
+  margin: 0 auto;
   justify-content: center;
+  max-width: fit-content;
 }
 
 .gridEasy {
   grid-template-columns: repeat(2, 1fr);
-  max-width: 200px;
 }
 
 .gridMedium {
   grid-template-columns: repeat(4, 1fr);
-  max-width: 400px;
 }
 
 .gridHard {
   grid-template-columns: repeat(6, 1fr);
-  max-width: 600px;
 }
 
-// Responsive design
+// Responsive
 @media (max-width: 768px) {
-  .gridEasy {
-    max-width: 150px;
-  }
-  
-  .gridMedium {
-    grid-template-columns: repeat(4, 1fr);
-    max-width: 300px;
-  }
-  
-  .gridHard {
-    grid-template-columns: repeat(6, 1fr);
-    max-width: 350px;
+  .board {
     gap: 0.25rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .gridMedium {
-    grid-template-columns: repeat(4, 1fr);
-    max-width: 280px;
-  }
-  
-  .gridHard {
-    grid-template-columns: repeat(6, 1fr);
-    max-width: 300px;
-    gap: 0.2rem;
   }
 }

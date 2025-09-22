@@ -3,85 +3,96 @@
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  margin: 1rem 0;
+  margin: 2rem 0;
   flex-wrap: wrap;
 }
 
-.statItem {
+.stat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #f8f9fa;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  min-width: 80px;
+  gap: 0.25rem;
 }
 
 .statLabel {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #666;
-  text-transform: uppercase;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: hsl(0 0% 45%);
 }
 
 .statValue {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: hsl(0 0% 10%);
 }
 
-.restartButton {
-  background: #4a90e2;
-  color: white;
-  border: none;
+.bestScore {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  background: hsl(50 100% 95%);
+  border: 1px solid hsl(50 100% 85%);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.bestValue {
+  font-weight: 500;
+  color: hsl(50 100% 20%);
+}
+
+.clearButton {
+  background: none;
+  border: none;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.2s;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
   
   &:hover {
-    background: #357ae8;
-  }
-  
-  &:focus-visible {
-    outline: 2px solid #4a90e2;
-    outline-offset: 2px;
+    background: hsl(50 100% 85%);
   }
 }
 
-.completionMessage {
-  background: #4caf50;
+.button {
+  padding: 0.5rem 1rem;
+  background: hsl(210 100% 50%);
   color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  
+  &:hover {
+    background: hsl(210 100% 45%);
+  }
+}
+
+.completion {
+  background: hsl(120 100% 95%);
+  color: hsl(120 100% 20%);
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   margin-top: 1rem;
   text-align: center;
-  font-weight: bold;
-  width: 100%;
+  border: 1px solid hsl(120 100% 85%);
 }
 
-// Responsive design
+.newBest {
+  display: block;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
 @media (max-width: 768px) {
   .stats {
     gap: 1rem;
   }
   
-  .statItem {
-    padding: 0.4rem 0.8rem;
-    min-width: 70px;
-  }
-  
-  .statLabel {
-    font-size: 0.8rem;
-  }
-  
-  .statValue {
-    font-size: 1.2rem;
-  }
-  
-  .restartButton {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
+  .bestScore {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }

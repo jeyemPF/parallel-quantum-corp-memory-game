@@ -1,3 +1,5 @@
+import type { Difficulty } from '../../types/game';
+import { getBestScores,  } from '../../utils/storage';
 import styles from './GameStats.module.scss';
 
 interface GameStatsProps {
@@ -5,38 +7,42 @@ interface GameStatsProps {
   time: number;
   isGameCompleted: boolean;
   onRestart: () => void;
+  difficulty: Difficulty;
 }
 
-const GameStats: React.FC<GameStatsProps> = ({ moves, time, isGameCompleted, onRestart }) => {
+const GameStats: React.FC<GameStatsProps> = ({ moves, time, isGameCompleted, onRestart, difficulty }) => {
+  const bestScore = getBestScores()[difficulty];
+
   const formatTime = (seconds: number): string => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${Math.floor(seconds / 60)}:${(seconds % 60).toString().padStart(2, '0')}`;
   };
 
   return (
     <div className={styles.stats}>
-      <div className={styles.statItem}>
-        <span className={styles.statLabel}>Time:</span>
+      <div className={styles.stat}>
+        <span className={styles.statLabel}>Time</span>
         <span className={styles.statValue}>{formatTime(time)}</span>
       </div>
       
-      <div className={styles.statItem}>
-        <span className={styles.statLabel}>Moves:</span>
+      <div className={styles.stat}>
+        <span className={styles.statLabel}>Moves</span>
         <span className={styles.statValue}>{moves}</span>
       </div>
-      
-      <button 
-        className={styles.restartButton}
-        onClick={onRestart}
-        aria-label="Restart game"
-      >
-        🔄 Restart
+
+      {bestScore && (
+        <div className={styles.bestScore}>
+          <span className={styles.bestValue}>Best: {bestScore.moves} moves</span>
+        </div>
+      )}
+
+      <button className={styles.button} onClick={onRestart}>
+        Restart
       </button>
       
       {isGameCompleted && (
-        <div className={styles.completionMessage} role="alert">
-          🎉 Congratulations! You completed the game in {moves} moves and {formatTime(time)}!
+        <div className={styles.completion}>
+          🎉 Completed in {moves} moves!
+          {bestScore?.moves === moves && <span className={styles.newBest}>New best!</span>}
         </div>
       )}
     </div>

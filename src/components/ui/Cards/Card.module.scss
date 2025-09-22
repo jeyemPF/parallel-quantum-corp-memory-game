@@ -1,0 +1,92 @@
+.card {
+  /* Responsive size: min 3rem, preferred 5vw, max 5rem */
+  width: clamp(3rem, 5vw, 5rem);
+  height: clamp(3rem, 5vw, 5rem);
+  perspective: 1000px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 0.5rem;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &:focus-visible {
+    outline: 4px solid hsl(41, 100%, 50%);
+    outline-offset: 2px;
+  }
+}
+
+.cardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.card.flipped .cardInner {
+  transform: rotateY(180deg);
+}
+
+.card.matched {
+  opacity: 0.7;
+}
+
+.cardFront,
+.cardBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  font-size: clamp(1rem, 2vw, 1.5rem); /* scales text */
+  border: 1px solid hsl(0 0% 90%);
+}
+
+.cardFront {
+  background: hsl(0 0% 100%);
+  color: hsl(0 0% 10%);
+  transform: rotateY(180deg);
+}
+
+.cardBack {
+  background: hsl(210 100% 50%);
+  color: hsl(0 0% 100%);
+}
+
+/* Extra fine-tuning for devices */
+@media (max-width: 1024px) {
+  .card {
+    width: clamp(3rem, 6vw, 4.5rem);
+    height: clamp(3rem, 6vw, 4.5rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: clamp(2.5rem, 8vw, 4rem);
+    height: clamp(2.5rem, 8vw, 4rem);
+  }
+  .cardFront,
+  .cardBack {
+    font-size: clamp(0.875rem, 3vw, 1.25rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: clamp(2rem, 10vw, 3.5rem);
+    height: clamp(2rem, 10vw, 3.5rem);
+  }
+  .cardFront,
+  .cardBack {
+    font-size: clamp(0.75rem, 4vw, 1rem);
+  }
+}
