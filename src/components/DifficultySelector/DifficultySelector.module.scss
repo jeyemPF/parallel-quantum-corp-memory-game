@@ -1,0 +1,51 @@
+.selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.select {
+  padding: 0.5rem;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: white;
+  cursor: pointer;
+  
+  &:focus {
+    outline: none;
+    border-color: #4a90e2;
+  }
+}
+
+.description {
+  font-size: 0.8rem;
+  color: #666;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .selector {
+    gap: 0.3rem;
+  }
+  
+  .label {
+    font-size: 0.8rem;
+  }
+  
+  .select {
+    padding: 0.4rem;
+    font-size: 0.9rem;
+  }
+  
+  .description {
+    font-size: 0.7rem;
+  }
+}

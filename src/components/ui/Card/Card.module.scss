@@ -1,0 +1,83 @@
+.card {
+  width: 80px;
+  height: 80px;
+  perspective: 1000px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  
+  &:disabled {
+    cursor: not-allowed;
+  }
+  
+  &:focus-visible {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+  }
+}
+
+.cardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.card.flipped .cardInner {
+  transform: rotateY(180deg);
+}
+
+.card.matched {
+  opacity: 0.6;
+}
+
+.cardFront, .cardBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cardFront {
+  background: #f8f9fa;
+  color: #333;
+  transform: rotateY(180deg);
+}
+
+.cardBack {
+  background: #4a90e2;
+  color: white;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .card {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .cardFront, .cardBack {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .cardFront, .cardBack {
+    font-size: 1.2rem;
+    border-radius: 4px;
+  }
+}

@@ -1,0 +1,87 @@
+.stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  min-width: 80px;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.restartButton {
+  background: #4a90e2;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background: #357ae8;
+  }
+  
+  &:focus-visible {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+  }
+}
+
+.completionMessage {
+  background: #4caf50;
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .stats {
+    gap: 1rem;
+  }
+  
+  .statItem {
+    padding: 0.4rem 0.8rem;
+    min-width: 70px;
+  }
+  
+  .statLabel {
+    font-size: 0.8rem;
+  }
+  
+  .statValue {
+    font-size: 1.2rem;
+  }
+  
+  .restartButton {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}
