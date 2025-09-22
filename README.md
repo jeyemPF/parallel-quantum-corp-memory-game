@@ -1,1 +1,1 @@
-This is for Coding Assesemnt only 
+This is for coding assesemnt only 
