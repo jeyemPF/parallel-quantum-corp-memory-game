@@ -1,6 +1,5 @@
 import type { Card } from "../types/game";
 
-// Emojis for card values - you can replace with images later
 const EMOJIS = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐧', '🐦'];
 
 export const generateCards = (totalCards: number): Card[] => {
