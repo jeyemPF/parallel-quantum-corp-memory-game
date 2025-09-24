@@ -1,4 +1,4 @@
-# 🧠 React/TypeScript Memory Game
+# 🧠 React/TypeScript/SASS Memory Game
 
 ![React](https://img.shields.io/badge/React-18-blue?logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-4.9-blue?logo=typescript)
